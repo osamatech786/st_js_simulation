@@ -7,6 +7,9 @@ st.set_page_config(page_title="3D Bouncing Ball Simulation", layout="wide")
 st.title("🏀 3D Bouncing Ball Simulation")
 st.write("This tool simulates a bouncing ball in 3D, based on the Java Ball3DApp.")
 
+# ****************************************
+# Simulation Parameters
+# ****************************************
 st.sidebar.header("Simulation Parameters")
 z0 = st.sidebar.number_input("Initial Height (z₀) [m]", value=9.0, step=0.5)
 vz0 = st.sidebar.number_input("Initial Velocity (vz₀) [m/s]", value=0.0, step=0.5)
@@ -14,6 +17,9 @@ dt = st.sidebar.number_input("Time Step (Δt) [s]", value=0.1, step=0.01, min_va
 n_steps = st.sidebar.number_input("Number of Steps (n)", value=100, step=10, min_value=1)
 g = 9.8  # Gravity
 
+# ****************************************
+# Simulation Function
+# ****************************************
 def simulate_ball(z0, vz0, dt, n_steps):
     time = np.zeros(n_steps + 1)
     z = np.zeros(n_steps + 1)
@@ -31,8 +37,14 @@ def simulate_ball(z0, vz0, dt, n_steps):
             
     return time, z, vz
 
+# ****************************************
+# Running the Simulation
+# ****************************************
 time, z, vz = simulate_ball(z0, vz0, dt, int(n_steps))
 
+# ****************************************
+# UI Layout
+# ****************************************
 col1, col2 = st.columns(2)
 
 with col1:
@@ -68,5 +80,8 @@ with col2:
     ax2.set_ylabel('vz [m/s]')
     st.pyplot(fig2, clear_figure=True)
 
+# ****************************************
+# Data Display
+# ****************************************
 st.subheader("Simulation Data")
 st.dataframe({'Time [s]': time, 'Position (z) [m]': z, 'Velocity (vz) [m/s]': vz})
